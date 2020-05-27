@@ -1,0 +1,46 @@
+# Project: Project1
+# Compiler: Default GCC compiler
+# Compiler Type: MingW 3
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 17/12/18 16:33
+
+WXLIBNAME = wxmsw29u
+CPP       = g++.exe
+CC        = gcc.exe
+WINDRES   = "windres.exe"
+OBJ       = Objects/MingW/CheckerApp.o Objects/MingW/CheckerFrm.o Objects/MingW/Checker_private.res
+LINKOBJ   = "Objects/MingW/CheckerApp.o" "Objects/MingW/CheckerFrm.o" Objects/MingW/Checker_private.res
+LIBS      = -L"C:/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Dev-Cpp/lib" -L"C:/Dev-Cpp/MinGW32/lib" -mwindows -l$(WXLIBNAME) -l$(WXLIBNAME)_gl -lwxscintilla -lwxtiff -lwxjpeg -lwxpng -lwxzlib -lwxregexu -lwxexpat -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 -lopengl32  -g3 
+INCS      = -I"C:/Dev-Cpp/MinGW32/include"
+CXXINCS   = -I"C:/Dev-Cpp/MinGW32/include" -I"C:/Dev-Cpp/" -I"C:/Dev-Cpp/include/common"
+RCINCS    = --include-dir "C:/Dev-Cpp/include/common"
+BIN       = Output/MingW/Checker.exe
+DEFINES   = -D__WXMSW__ -D__GNUWIN32__ -D_UNICODE
+CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3
+CFLAGS    = $(INCS) $(DEFINES)   -g3
+GPROF     = gprof.exe
+ifeq ($(OS),Windows_NT)
+   RM = del /Q
+   FixPath = $(subst /,\,$1)
+else
+   RM = rm -f
+   FixPath = $1
+endif
+LINK      = g++.exe
+
+.PHONY: all all-before all-after clean clean-custom
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
+
+$(BIN): $(OBJ)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
+
+Objects/MingW/CheckerApp.o: $(GLOBALDEPS) CheckerApp.cpp CheckerApp.h CheckerFrm.h
+	$(CPP) -c CheckerApp.cpp -o Objects/MingW/CheckerApp.o $(CXXFLAGS)
+
+Objects/MingW/CheckerFrm.o: $(GLOBALDEPS) CheckerFrm.cpp CheckerFrm.h
+	$(CPP) -c CheckerFrm.cpp -o Objects/MingW/CheckerFrm.o $(CXXFLAGS)
+
+Objects/MingW/Checker_private.res: Objects/MingW/Checker_private.rc CheckerApp.rc 
+	$(WINDRES) --input-format=rc -o Objects/MingW/Checker_private.res $(RCINCS) Objects/MingW/Checker_private.rc -O coff
